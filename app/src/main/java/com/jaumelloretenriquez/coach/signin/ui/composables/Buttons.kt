@@ -1,0 +1,62 @@
+package com.jaumelloretenriquez.coach.signin.ui.composables
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
+import com.jaumelloretenriquez.coach.ui.theme.YellowCoach
+
+@Composable
+fun RoundedButton(text: String, onClick: () -> Unit, enabled: Boolean) {
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = Modifier
+            .height(62.dp)
+            .fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = YellowCoach,
+            containerColor = BrownCoach,
+            disabledContentColor = Color.White,
+            disabledContainerColor = Color.Black
+        )
+    ) {
+        Text(text = text)
+    }
+}
+
+@Composable
+fun CircularButton(icon: ImageVector, text: String, color: Color, onClick: () -> Unit) {
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .background(color)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(imageVector = icon, contentDescription = text, tint = Color.White)
+        }
+    }
+}
