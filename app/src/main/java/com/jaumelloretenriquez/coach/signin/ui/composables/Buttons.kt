@@ -1,8 +1,7 @@
 package com.jaumelloretenriquez.coach.signin.ui.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -51,10 +50,9 @@ fun CircularButton(icon: ImageVector, text: String, color: Color, onClick: () ->
             .clip(CircleShape)
             .background(color)
     ) {
-        Row(
+        Box(
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            contentAlignment = Alignment.Center
         ) {
             Icon(imageVector = icon, contentDescription = text, tint = Color.White)
         }
