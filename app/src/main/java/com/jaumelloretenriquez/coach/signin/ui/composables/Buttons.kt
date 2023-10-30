@@ -12,11 +12,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
@@ -42,7 +44,7 @@ fun RoundedButton(text: String, onClick: () -> Unit, enabled: Boolean) {
 }
 
 @Composable
-fun CircularButton(icon: ImageVector, text: String, color: Color, onClick: () -> Unit) {
+fun CircularButton(icon: ImageVector , text: String, color: Color, onClick: () -> Unit) {
     IconButton(
         onClick = onClick,
         modifier = Modifier
@@ -55,6 +57,24 @@ fun CircularButton(icon: ImageVector, text: String, color: Color, onClick: () ->
             contentAlignment = Alignment.Center
         ) {
             Icon(imageVector = icon, contentDescription = text, tint = Color.White)
+        }
+    }
+}
+
+@Composable
+fun CircularButton(icon: Painter , text: String, color: Color, onClick: () -> Unit) {
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .background(color)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(painter = icon, contentDescription = text, tint = Color.White, modifier = Modifier.size(24.dp))
         }
     }
 }
