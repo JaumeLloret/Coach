@@ -7,19 +7,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,31 +30,42 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import com.jaumelloretenriquez.coach.R
 import com.jaumelloretenriquez.coach.signin.ui.composables.BasicTextField
 import com.jaumelloretenriquez.coach.signin.ui.composables.CircularButton
 import com.jaumelloretenriquez.coach.signin.ui.composables.PasswordTextField
 import com.jaumelloretenriquez.coach.signin.ui.composables.RoundedButton
+import com.jaumelloretenriquez.coach.ui.routes.Routes.*
 import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
 
 @Composable
-fun SignInScreen(signInViewModel: SignInViewModel) {
-    Scaffold(
+fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewModel) {
+    ConstraintLayout(
         modifier = Modifier
             .padding(horizontal = 30.dp, vertical = 15.dp)
             .fillMaxSize(),
-        topBar = { Header() },
-        bottomBar = { Footer() },
-        containerColor = Color.Transparent
     ) {
-        Body(it, signInViewModel = signInViewModel)
+        val (header, body, footer) = createRefs()
+        val topGuide = createGuidelineFromTop(0.38f)
+
+        Header(modifier = Modifier.constrainAs(header) {
+            top.linkTo(parent.top)
+        })
+        Body(modifier = Modifier.constrainAs(body) {
+            top.linkTo(topGuide)
+        }, signInViewModel = signInViewModel, navController)
+        Footer(modifier = Modifier.constrainAs(footer) {
+            bottom.linkTo(parent.bottom)
+        }, navController)
     }
 }
 
 @Composable
-fun Header() {
+fun Header(modifier: Modifier) {
     val activity = LocalContext.current as Activity
-    Box(Modifier.fillMaxWidth()) {
+    Box(modifier.fillMaxWidth()) {
         Icon(
             imageVector = Icons.Default.Close,
             contentDescription = stringResource(id = R.string.close_app),
@@ -72,14 +80,25 @@ fun Header() {
 }
 
 @Composable
-fun Body(paddingValues: PaddingValues, signInViewModel: SignInViewModel) {
+fun ImageLogo(modifier: Modifier) {
+    Image(
+        painter = painterResource(id = R.drawable.logo),
+        contentScale = ContentScale.Crop,
+        contentDescription = stringResource(id = R.string.app_name),
+        modifier = modifier
+            .size(170.dp)
+            .clip(CircleShape)
+    )
+}
+
+@Composable
+fun Body(modifier: Modifier, signInViewModel: SignInViewModel, navController: NavHostController) {
     val emailOrPhone: String = "" //by signInViewModel.email.observeAsState(initial = "")
     val password: String = "" //by signInViewModel.password.observeAsState(initial = "")
     val isLoginEnable: Boolean =
         true //by signInViewModel.isButtonLoginEnable.observeAsState(initial = false)
-    Column(
-        Modifier.padding(paddingValues = paddingValues)
-    ) {
+
+    Column(modifier = modifier.fillMaxWidth()) {
         PhoneOrEmailInputText(emailOrPhone) {
             //loginViewModel.onLoginChanged(email = it, password = password)
             Log.i("DAM", "PhoneOrEmail")
@@ -92,22 +111,10 @@ fun Body(paddingValues: PaddingValues, signInViewModel: SignInViewModel) {
         Spacer(modifier = Modifier.size(16.dp))
         //ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnable, signInViewModel)
+        LoginButton(isLoginEnable, signInViewModel, navController)
         Spacer(modifier = Modifier.size(32.dp))
         OauthButtons(signInViewModel = signInViewModel)
     }
-}
-
-@Composable
-fun ImageLogo(modifier: Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.logo),
-        contentScale = ContentScale.Crop,
-        contentDescription = stringResource(id = R.string.app_name),
-        modifier = modifier
-            .size(170.dp)
-            .clip(CircleShape)
-    )
 }
 
 @Composable
@@ -129,8 +136,16 @@ fun PasswordInputText(password: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean, signInViewModel: SignInViewModel) {
-    RoundedButton(text = stringResource(id = R.string.sign_in), onClick = {}, enabled = loginEnable)
+fun LoginButton(
+    loginEnable: Boolean,
+    signInViewModel: SignInViewModel,
+    navController: NavHostController
+) {
+    RoundedButton(
+        text = stringResource(id = R.string.login),
+        onClick = { navController.navigate(HomeScreen.createRoute(3, "Cucala")) },
+        enabled = loginEnable
+    )
 }
 
 @Composable
@@ -161,15 +176,14 @@ fun OauthButtons(signInViewModel: SignInViewModel) {
 }
 
 @Composable
-fun Footer(/*navigationController: NavHostController*/) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        SignUp(/*navigationController*/)
-        Spacer(modifier = Modifier.height(24.dp))
+fun Footer(modifier: Modifier, navController: NavHostController) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        SignUpButton(navController)
     }
 }
 
 @Composable
-fun SignUp(/*navigationController: NavHostController*/) {
+fun SignUpButton(navController: NavHostController) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.sign_up_question),
@@ -180,7 +194,7 @@ fun SignUp(/*navigationController: NavHostController*/) {
             text = stringResource(id = R.string.sign_up),
             Modifier
                 .padding(horizontal = 8.dp)
-                .clickable { Log.i("DAM", "To Sign Up") },
+                .clickable { navController.navigate(SignUpScreen.route) },
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = BrownCoach,

@@ -1,4 +1,4 @@
-package com.jaumelloretenriquez.coach.ui.background
+package com.jaumelloretenriquez.coach.ui.theme
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,7 @@ fun BackgroundArea() {
             painter = painterResource(id = R.drawable.bg_basketball_area),
             contentDescription = "Background",
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillBounds
         )
     }
 }
@@ -29,7 +29,7 @@ fun BackgroundAreaReverse() {
             painter = painterResource(id = R.drawable.bg_basketball_area),
             contentDescription = "Background",
             modifier = Modifier.fillMaxSize().rotate(180F),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillBounds
         )
     }
 }
@@ -41,7 +41,7 @@ fun BackgroundCourt() {
             painter = painterResource(id = R.drawable.bg_basketball_court),
             contentDescription = "Background",
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillBounds
         )
     }
 }
