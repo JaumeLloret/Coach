@@ -17,9 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.jaumelloretenriquez.coach.signin.ui.SignInScreen
-import com.jaumelloretenriquez.coach.signin.ui.SignInViewModel
-import com.jaumelloretenriquez.coach.signup.ui.SignUpScreen
+import com.jaumelloretenriquez.coach.signin.presentation.SignInScreen
+import com.jaumelloretenriquez.coach.signin.presentation.SignInViewModel
+import com.jaumelloretenriquez.coach.signup.presentation.SignUpScreen
 import com.jaumelloretenriquez.coach.ui.routes.Routes.*
 import com.jaumelloretenriquez.coach.ui.theme.BackgroundArea
 import com.jaumelloretenriquez.coach.ui.theme.BackgroundAreaReverse

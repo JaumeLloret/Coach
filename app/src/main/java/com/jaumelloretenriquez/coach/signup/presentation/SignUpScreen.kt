@@ -1,6 +1,5 @@
-package com.jaumelloretenriquez.coach.signup.ui
+package com.jaumelloretenriquez.coach.signup.presentation
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,12 +32,10 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.jaumelloretenriquez.coach.R
-import com.jaumelloretenriquez.coach.signup.ui.composables.PasswordTextField
-import com.jaumelloretenriquez.coach.signup.ui.composables.RoundedButton
-import com.jaumelloretenriquez.coach.signup.ui.composables.BasicTextField
-import com.jaumelloretenriquez.coach.ui.routes.Routes
+import com.jaumelloretenriquez.coach.signup.presentation.composables.PasswordTextField
+import com.jaumelloretenriquez.coach.signup.presentation.composables.RoundedButton
+import com.jaumelloretenriquez.coach.signup.presentation.composables.BasicTextField
 import com.jaumelloretenriquez.coach.ui.routes.Routes.*
-import com.jaumelloretenriquez.coach.ui.theme.BackgroundAreaReverse
 import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
 import com.jaumelloretenriquez.coach.ui.theme.TitleTextStyle
 

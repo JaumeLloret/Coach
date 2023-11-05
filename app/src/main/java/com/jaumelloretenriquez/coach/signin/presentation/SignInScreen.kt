@@ -1,7 +1,6 @@
-package com.jaumelloretenriquez.coach.signin.ui
+package com.jaumelloretenriquez.coach.signin.presentation
 
 import android.app.Activity
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +18,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,10 +34,10 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.jaumelloretenriquez.coach.R
-import com.jaumelloretenriquez.coach.signin.ui.composables.BasicTextField
-import com.jaumelloretenriquez.coach.signin.ui.composables.CircularButton
-import com.jaumelloretenriquez.coach.signin.ui.composables.PasswordTextField
-import com.jaumelloretenriquez.coach.signin.ui.composables.RoundedButton
+import com.jaumelloretenriquez.coach.signin.presentation.composables.BasicTextField
+import com.jaumelloretenriquez.coach.signin.presentation.composables.CircularButton
+import com.jaumelloretenriquez.coach.signin.presentation.composables.PasswordTextField
+import com.jaumelloretenriquez.coach.signin.presentation.composables.RoundedButton
 import com.jaumelloretenriquez.coach.ui.routes.Routes.*
 import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
 
@@ -93,25 +94,23 @@ fun ImageLogo(modifier: Modifier) {
 
 @Composable
 fun Body(modifier: Modifier, signInViewModel: SignInViewModel, navController: NavHostController) {
-    val emailOrPhone: String = "" //by signInViewModel.email.observeAsState(initial = "")
-    val password: String = "" //by signInViewModel.password.observeAsState(initial = "")
-    val isLoginEnable: Boolean =
-        true //by signInViewModel.isButtonLoginEnable.observeAsState(initial = false)
+    val emailOrPhone: String by signInViewModel.emailOrPhone.observeAsState(initial = "")
+    val password: String by signInViewModel.password.observeAsState(initial = "")
+    val isSignInButtonEnable: Boolean
+        by signInViewModel.isSignInButtonEnable.observeAsState(initial = false)
 
     Column(modifier = modifier.fillMaxWidth()) {
         PhoneOrEmailInputText(emailOrPhone) {
-            //loginViewModel.onLoginChanged(email = it, password = password)
-            Log.i("DAM", "PhoneOrEmail")
+            signInViewModel.onSignInChanged(emailOrPhone = it, password = password)
         }
         Spacer(modifier = Modifier.size(16.dp))
         PasswordInputText(password) {
-            //loginViewModel.onLoginChanged(email = email, password = it)
-            Log.i("DAM", "Password")
+            signInViewModel.onSignInChanged(emailOrPhone = emailOrPhone, password = it)
         }
         Spacer(modifier = Modifier.size(16.dp))
         //ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnable, signInViewModel, navController)
+        LoginButton(isSignInButtonEnable, signInViewModel, navController)
         Spacer(modifier = Modifier.size(32.dp))
         OauthButtons(signInViewModel = signInViewModel)
     }
@@ -143,7 +142,7 @@ fun LoginButton(
 ) {
     RoundedButton(
         text = stringResource(id = R.string.login),
-        onClick = { navController.navigate(HomeScreen.createRoute(3, "Cucala")) },
+        onClick = { navController.navigate(HomeScreen.createRoute(3, "Home")) },
         enabled = loginEnable
     )
 }

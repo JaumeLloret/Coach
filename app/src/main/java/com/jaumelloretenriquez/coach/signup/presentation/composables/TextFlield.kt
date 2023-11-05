@@ -1,4 +1,4 @@
-package com.jaumelloretenriquez.coach.signin.ui.composables
+package com.jaumelloretenriquez.coach.signup.presentation.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,8 +10,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -32,7 +31,8 @@ fun BasicTextField(
     value: String,
     label: String,
     onTextChanged: (String) -> Unit,
-    placeholder: String
+    placeholder: String,
+    imageVector: ImageVector,
 ) {
     OutlinedTextField(
         value = value,
@@ -59,11 +59,14 @@ fun BasicTextField(
             unfocusedSupportingTextColor = BrownCoach,
             unfocusedBorderColor = BrownCoach,
         ),
+        leadingIcon = {
+            Icon(imageVector = imageVector, contentDescription = label)
+        }
     )
 }
 
 @Composable
-fun PasswordTextField(password: String, onTextChanged: (String) -> Unit) {
+fun PasswordTextField(password: String, imageVector: ImageVector, onTextChanged: (String) -> Unit) {
     var passwordVisibility by remember { mutableStateOf(false) }
     OutlinedTextField(
         value = password,
@@ -108,6 +111,7 @@ fun PasswordTextField(password: String, onTextChanged: (String) -> Unit) {
             VisualTransformation.None
         } else {
             PasswordVisualTransformation()
-        }
+        },
+        leadingIcon = { Icon(imageVector = imageVector, contentDescription = stringResource(id = R.string.password))}
     )
 }
