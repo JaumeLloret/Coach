@@ -1,11 +1,17 @@
 package com.jaumelloretenriquez.coach.signin.presentation
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.jaumelloretenriquez.coach.signin.domain.SignInUseCase
+import kotlinx.coroutines.launch
 
 class SignInViewModel : ViewModel() {
+    private val signInUseCase = SignInUseCase()
+
     private val _emailOrPhone = MutableLiveData<String>()
     val emailOrPhone: LiveData<String> = _emailOrPhone
 
@@ -33,5 +39,17 @@ class SignInViewModel : ViewModel() {
         && _password.value!!.contains(Regex("[A-Z]"))
         && _password.value!!.contains(Regex("[a-z]"))
         && _password.value!!.contains(Regex("[0-9]"))
+
+    fun onSignInButtonCLicked() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = signInUseCase(_emailOrPhone.value!!, _password.value!!)
+
+            if(result) {
+                Log.i("COACH", "Navigate to Home")
+            }
+            _isLoading.value = false
+        }
+    }
 }
 

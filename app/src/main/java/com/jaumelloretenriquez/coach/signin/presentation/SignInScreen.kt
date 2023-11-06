@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +44,27 @@ import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
 
 @Composable
 fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewModel) {
+    val isLoading: Boolean by signInViewModel.isLoading.observeAsState(initial = false)
+
+    if (isLoading) {
+        Loading()
+    } else {
+        View(navController, signInViewModel)
+    }
+}
+
+@Composable
+fun Loading() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+    }
+}
+
+@Composable
+fun View(navController: NavHostController, signInViewModel: SignInViewModel) {
     ConstraintLayout(
         modifier = Modifier
             .padding(horizontal = 30.dp, vertical = 15.dp)
@@ -56,7 +78,7 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
         })
         Body(modifier = Modifier.constrainAs(body) {
             top.linkTo(topGuide)
-        }, signInViewModel = signInViewModel, navController)
+        }, signInViewModel = signInViewModel)
         Footer(modifier = Modifier.constrainAs(footer) {
             bottom.linkTo(parent.bottom)
         }, navController)
@@ -93,11 +115,11 @@ fun ImageLogo(modifier: Modifier) {
 }
 
 @Composable
-fun Body(modifier: Modifier, signInViewModel: SignInViewModel, navController: NavHostController) {
+fun Body(modifier: Modifier, signInViewModel: SignInViewModel) {
     val emailOrPhone: String by signInViewModel.emailOrPhone.observeAsState(initial = "")
     val password: String by signInViewModel.password.observeAsState(initial = "")
     val isSignInButtonEnable: Boolean
-        by signInViewModel.isSignInButtonEnable.observeAsState(initial = false)
+            by signInViewModel.isSignInButtonEnable.observeAsState(initial = false)
 
     Column(modifier = modifier.fillMaxWidth()) {
         PhoneOrEmailInputText(emailOrPhone) {
@@ -110,7 +132,7 @@ fun Body(modifier: Modifier, signInViewModel: SignInViewModel, navController: Na
         Spacer(modifier = Modifier.size(16.dp))
         //ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isSignInButtonEnable, signInViewModel, navController)
+        SignInButton(isSignInButtonEnable, signInViewModel)
         Spacer(modifier = Modifier.size(32.dp))
         OauthButtons(signInViewModel = signInViewModel)
     }
@@ -135,14 +157,13 @@ fun PasswordInputText(password: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-fun LoginButton(
+fun SignInButton(
     loginEnable: Boolean,
-    signInViewModel: SignInViewModel,
-    navController: NavHostController
+    signInViewModel: SignInViewModel
 ) {
     RoundedButton(
         text = stringResource(id = R.string.login),
-        onClick = { navController.navigate(HomeScreen.createRoute(3, "Home")) },
+        onClick = { signInViewModel.onSignInButtonCLicked() },
         enabled = loginEnable
     )
 }
