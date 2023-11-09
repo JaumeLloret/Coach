@@ -7,10 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jaumelloretenriquez.coach.signin.domain.SignInUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignInViewModel : ViewModel() {
-    private val signInUseCase = SignInUseCase()
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val signInUseCase: SignInUseCase
+) : ViewModel() {
 
     private val _emailOrPhone = MutableLiveData<String>()
     val emailOrPhone: LiveData<String> = _emailOrPhone

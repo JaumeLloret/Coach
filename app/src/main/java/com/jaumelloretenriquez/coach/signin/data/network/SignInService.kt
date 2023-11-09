@@ -1,15 +1,17 @@
 package com.jaumelloretenriquez.coach.signin.data.network
 
-import com.jaumelloretenriquez.coach.core.network.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import javax.inject.Inject
 
-class SignInService {
-    private val retrofit = RetrofitHelper.getRetrofitMock()
+class SignInService @Inject constructor(
+    private val client: SignInClient
+) {
 
     suspend fun doSignIn(user: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val response = retrofit.create(SignInClient::class.java).doSignIn(/*user, password*/)
+            val response = client.doSignIn(/*user, password*/)
 
             !response.body()?.name.isNullOrEmpty()
         }

@@ -3,6 +3,7 @@ package com.jaumelloretenriquez.coach
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -12,22 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.jaumelloretenriquez.coach.signin.presentation.SignInScreen
 import com.jaumelloretenriquez.coach.signin.presentation.SignInViewModel
 import com.jaumelloretenriquez.coach.signup.presentation.SignUpScreen
 import com.jaumelloretenriquez.coach.ui.routes.Routes.*
 import com.jaumelloretenriquez.coach.ui.theme.BackgroundArea
 import com.jaumelloretenriquez.coach.ui.theme.BackgroundAreaReverse
-import com.jaumelloretenriquez.coach.ui.theme.BackgroundCourt
 import com.jaumelloretenriquez.coach.ui.theme.CoachTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val signInViewModel = SignInViewModel()
+    private val signInViewModel: SignInViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                             BackgroundAreaReverse()
                             SignUpScreen(navController)
                         }
-                        composable(
+                        /*composable(
                             HomeScreen.route,
                             arguments = listOf(
                                 navArgument("id") { type = NavType.IntType },
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                                 id = it.arguments?.getInt("id") ?: 0,
                                 username = it.arguments?.getString("username").orEmpty()
                             )
-                        }
+                        }*/
                     }
                 }
             }
