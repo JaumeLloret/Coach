@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jaumelloretenriquez.coach.core.security.PasswordHash
 import com.jaumelloretenriquez.coach.signin.domain.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase
+    private val signInUseCase: SignInUseCase,
+    private val crypto: PasswordHash
 ) : ViewModel() {
 
     private val _emailOrPhone = MutableLiveData<String>()
@@ -47,6 +49,7 @@ class SignInViewModel @Inject constructor(
     fun onSignInButtonCLicked() {
         viewModelScope.launch {
             _isLoading.value = true
+            //crypto.getCryptoPassword(_password.value!!)
             val result = signInUseCase(_emailOrPhone.value!!, _password.value!!)
 
             if(result) {

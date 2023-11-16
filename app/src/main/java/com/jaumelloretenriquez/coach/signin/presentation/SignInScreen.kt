@@ -39,7 +39,7 @@ import com.jaumelloretenriquez.coach.signin.presentation.composables.BasicTextFi
 import com.jaumelloretenriquez.coach.signin.presentation.composables.CircularButton
 import com.jaumelloretenriquez.coach.signin.presentation.composables.PasswordTextField
 import com.jaumelloretenriquez.coach.signin.presentation.composables.RoundedButton
-import com.jaumelloretenriquez.coach.ui.routes.Routes.*
+import com.jaumelloretenriquez.coach.core.routes.Routes.*
 import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
 
 @Composable

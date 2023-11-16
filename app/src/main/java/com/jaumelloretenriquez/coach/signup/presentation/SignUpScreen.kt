@@ -35,7 +35,7 @@ import com.jaumelloretenriquez.coach.R
 import com.jaumelloretenriquez.coach.signup.presentation.composables.PasswordTextField
 import com.jaumelloretenriquez.coach.signup.presentation.composables.RoundedButton
 import com.jaumelloretenriquez.coach.signup.presentation.composables.BasicTextField
-import com.jaumelloretenriquez.coach.ui.routes.Routes.*
+import com.jaumelloretenriquez.coach.core.routes.Routes.*
 import com.jaumelloretenriquez.coach.ui.theme.BrownCoach
 import com.jaumelloretenriquez.coach.ui.theme.TitleTextStyle
 

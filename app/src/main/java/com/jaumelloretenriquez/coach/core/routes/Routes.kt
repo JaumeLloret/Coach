@@ -1,4 +1,4 @@
-package com.jaumelloretenriquez.coach.ui.routes
+package com.jaumelloretenriquez.coach.core.routes
 
 sealed class Routes(val route: String) {
     object  SignInScreen: Routes("signInScreen")
