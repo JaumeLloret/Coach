@@ -36,6 +36,6 @@ class PasswordHash {
     fun getCryptoPassword(password: String): Pair<String, String> {
         val salt = generateSalt()
         val hash = hashPassword(password.toCharArray(), salt)
-        return Pair(Base64.encodeToString(salt, Base64.DEFAULT), hash)
+        return Pair(hash, Base64.encodeToString(salt, Base64.DEFAULT))
     }
 }
