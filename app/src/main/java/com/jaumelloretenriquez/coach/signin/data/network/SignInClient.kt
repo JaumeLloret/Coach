@@ -1,12 +1,17 @@
 package com.jaumelloretenriquez.coach.signin.data.network
 
+import com.jaumelloretenriquez.coach.signin.data.network.dto.UserDTO
 import com.jaumelloretenriquez.coach.signin.data.network.response.SignInResponse
 import retrofit2.Response
-import retrofit2.http.GET
+import retrofit2.http.Body
+import retrofit2.http.Headers
+import retrofit2.http.POST
 
 interface SignInClient {
-
-    @GET("/v3/cd51b18b-1c89-46df-9425-54651f2f364e")
-    suspend fun doSignIn(/*user:String, password:String*/):Response<SignInResponse>
+    @Headers(
+        "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsdXRydHFjZWVyZ2FmZHRxamViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAwNTI2MDksImV4cCI6MjAxNTYyODYwOX0.M0LOr8aHu4GA8TE9B-7skWZl348m2YF1ACUX_CZQcBw",
+        "Content-Type: application/json"
+    )
+    @POST("auth/v1/token?grant_type=password")
+    suspend fun doSignIn(@Body user: UserDTO): Response<SignInResponse>
 }
-

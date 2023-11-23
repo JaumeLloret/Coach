@@ -1,5 +1,7 @@
 package com.jaumelloretenriquez.coach.signin.data.network
 
+import android.util.Log
+import com.jaumelloretenriquez.coach.signin.data.network.dto.UserDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -11,9 +13,11 @@ class SignInService @Inject constructor(
 
     suspend fun doSignIn(user: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val response = client.doSignIn(/*user, password*/)
+            val response = client.doSignIn(UserDTO(user, password))
 
-            !response.body()?.name.isNullOrEmpty()
+            Log.i("DAM", response.body()?.accessToken!!)
+
+            !response.body()?.accessToken.isNullOrEmpty()
         }
     }
 }

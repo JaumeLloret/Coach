@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jaumelloretenriquez.coach.core.security.PasswordHash
 import com.jaumelloretenriquez.coach.signin.domain.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase,
-    private val crypto: PasswordHash
+    private val signInUseCase: SignInUseCase
 ) : ViewModel() {
 
     private val _emailOrPhone = MutableLiveData<String>()

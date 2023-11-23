@@ -56,8 +56,7 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
 @Composable
 fun Loading() {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
     }
@@ -118,22 +117,20 @@ fun ImageLogo(modifier: Modifier) {
 fun Body(modifier: Modifier, signInViewModel: SignInViewModel) {
     val emailOrPhone: String by signInViewModel.emailOrPhone.observeAsState(initial = "")
     val password: String by signInViewModel.password.observeAsState(initial = "")
-    val isSignInButtonEnable: Boolean
-            by signInViewModel.isSignInButtonEnable.observeAsState(initial = false)
+    val isSignInButtonEnable: Boolean by signInViewModel.isSignInButtonEnable.observeAsState(initial = false)
 
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(
+        modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         PhoneOrEmailInputText(emailOrPhone) {
             signInViewModel.onSignInChanged(emailOrPhone = it, password = password)
         }
-        Spacer(modifier = Modifier.size(16.dp))
         PasswordInputText(password) {
             signInViewModel.onSignInChanged(emailOrPhone = emailOrPhone, password = it)
         }
-        Spacer(modifier = Modifier.size(16.dp))
         //ForgotPassword(Modifier.align(Alignment.End))
-        Spacer(modifier = Modifier.size(16.dp))
         SignInButton(isSignInButtonEnable, signInViewModel)
-        Spacer(modifier = Modifier.size(32.dp))
+        Spacer(modifier = Modifier.size(16.dp))
         OauthButtons(signInViewModel = signInViewModel)
     }
 }
@@ -151,15 +148,13 @@ fun PhoneOrEmailInputText(value: String, onTextChanged: (String) -> Unit) {
 @Composable
 fun PasswordInputText(password: String, onTextChanged: (String) -> Unit) {
     PasswordTextField(
-        password = password,
-        onTextChanged = onTextChanged
+        password = password, onTextChanged = onTextChanged
     )
 }
 
 @Composable
 fun SignInButton(
-    loginEnable: Boolean,
-    signInViewModel: SignInViewModel
+    loginEnable: Boolean, signInViewModel: SignInViewModel
 ) {
     RoundedButton(
         text = stringResource(id = R.string.login),
@@ -179,16 +174,12 @@ fun OauthButtons(signInViewModel: SignInViewModel) {
 
         }
         CircularButton(
-            icon = painterResource(id = R.drawable.ic_google),
-            text = "Google",
-            color = Color.Red
+            icon = painterResource(id = R.drawable.ic_google), text = "Google", color = Color.Red
         ) {
 
         }
         CircularButton(
-            icon = painterResource(id = R.drawable.ic_github),
-            text = "Github",
-            color = Color.Black
+            icon = painterResource(id = R.drawable.ic_github), text = "Github", color = Color.Black
         ) {
 
         }

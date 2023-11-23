@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity @Inject constructor() : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     private val signInViewModel: SignInViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,10 @@ class MainActivity @Inject constructor() : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Routes.SignInScreen.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = Routes.SignInScreen.route
+                    ) {
                         composable(Routes.SignInScreen.route) {
                             BackgroundArea()
                             SignInScreen(navController, signInViewModel = signInViewModel)
